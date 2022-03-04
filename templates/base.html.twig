@@ -1,19 +1,83 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Site de Calendrier Scolaire">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>{% block title %}LimayHub{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/limayhub.css') }}">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{{ path('app_home') }}">LimayHub</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                </li>
+            </ul>
+            <div class="navbar-item-custom">
+                {%  if app.user %}
+                    <a href="{{ path('account') }}">Mon conpte <small>({{ app.user.firstname }})</small></a> | <a href="{{ path('app_planning') }}">Planning</a> | <a href="{{ path('messages') }}">Messagerie</a> | <a href="{{ path('app_logout') }}">Déconnexion</a>
+                {%  else %}
+                    <a href="{{ path('app_login') }}">Connexion</a>
+                {%  endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    | <a href="{{ path('admin') }}">Administration</a> | <a href="{{ path('app_calendar_index') }}">Gestion planning</a>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+<main role="main">
+
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing {% if block('carousel') is not defined %}mt-5{% endif %}">
+
+        {% block content%}
+
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+        <!-- FOOTER -->
+
+</main>
+<footer class="footer-custom">
+    <p>&copy; 2021-2022 LimayHub.  </p>
+</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
+</body>
 </html>
